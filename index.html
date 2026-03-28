@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <title>Sai Kishore // Automation Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-300">
+    <div class="aurora"></div>
+    <div class="flex min-h-screen">
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 glass-card border-r border-white/5 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="flex flex-col h-full py-8">
+                <div class="px-8 mb-12">
+                    <h2 class="text-white font-bold tracking-tight">Sai Kishore</h2>
+                    <p class="text-[10px] font-mono text-slate-500 uppercase">Automation Engineer</p>
+                </div>
+                <nav class="flex-grow px-4">
+                    <a href="#about" class="nav-link flex items-center px-4 py-4 rounded-xl hover:bg-white/5" data-section="about">Dashboard</a>
+                    <a href="#experience" class="nav-link flex items-center px-4 py-4 rounded-xl hover:bg-white/5" data-section="experience">Experience</a>
+                    <a href="#skills" class="nav-link flex items-center px-4 py-4 rounded-xl hover:bg-white/5" data-section="skills">Tech Stack</a>
+                    <a href="#projects" class="nav-link flex items-center px-4 py-4 rounded-xl hover:bg-white/5" data-section="projects">Projects</a>
+                </nav>
+            </div>
+        </aside>
+        <main class="flex-grow md:ml-64 p-6 md:p-12 lg:p-16 w-full">
+            <section id="about" class="mb-32 reveal">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">I engineer <span class="text-sky-400">automated</span> ecosystems.</h2>
+                <p class="text-lg text-slate-400">Sai Kishore // Automation Engineer & SDET with 3+ years of experience[cite: 6].</p>
+            </section>
+            <section id="experience" class="mb-32 reveal">
+                <h3 class="text-2xl font-bold text-white mb-8 underline decoration-sky-500">Experience</h3>
+                <div class="glass-card p-6 rounded-2xl">
+                    <h4 class="font-bold">Innovation Technology Ecom Pvt Ltd [cite: 18]</h4>
+                    <p class="text-sm text-sky-400">June 2022 - Present [cite: 19]</p>
+                    <ul class="mt-4 list-disc list-inside text-sm text-slate-400">
+                        <li>Designed frameworks using Selenium, TestNG, and POM[cite: 20, 21].</li>
+                        <li>Reduced manual regression effort by 40%[cite: 23].</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="skills" class="mb-32 reveal">
+                <h3 class="text-2xl font-bold text-white mb-8">Tech Stack</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-card p-4 rounded-xl">Java, Selenium [cite: 14]</div>
+                    <div class="glass-card p-4 rounded-xl">Rest Assured, Postman [cite: 14]</div>
+                </div>
+            </section>
+            <section id="projects" class="mb-32 reveal">
+                <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+            </section>
+        </main>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
