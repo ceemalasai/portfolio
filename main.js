@@ -1,127 +1,128 @@
-/**
- * PROJECT REPOSITORY DATA
- * Edit this array to add or update your work
- */
-const repos = [
-    {
-        title: "VEON 5G - Telecom Billing",
-        desc: "End-to-end automation for UI and API testing of 5G services (Voice, Data, SMS). Validates MSISDN-based charging and product codes.",
-        tech: ["Java", "Selenium", "Rest Assured"],
-        id: "PRJ-01",
-        url: "https://github.com/ceemalasai"
-    },
-    {
-        title: "Restore Management System",
-        desc: "Automation test suites for UI, CLI, and API testing. Created reusable libraries in TestNG for device configuration validation.",
-        tech: ["Java", "Selenium", "TestNG"],
-        id: "PRJ-02",
-        url: "https://github.com/ceemalasai"
-    }
-];
+import data from './db.js';
 
-/**
- * RENDER PROJECTS TO THE GRID
- */
-function renderProjects() {
-    const grid = document.getElementById('projects-grid');
-    if (!grid) return;
+(function () {
+    'use strict';
 
-    grid.innerHTML = repos.map(repo => `
-        <div class="glass-card p-8 rounded-3xl border border-white/5 hover:border-cyber-primary/40 transition-all group relative flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-start mb-4">
-                     <div class="text-[10px] font-mono text-slate-600">${repo.id}</div>
-                     <a href="${repo.url}" target="_blank" class="text-slate-500 hover:text-cyber-primary transition-colors">
-                        <i data-lucide="external-link" class="w-4 h-4"></i>
-                     </a>
+    const populatePortfolio = () => {
+        // --- About Section ---
+        const aboutContainer = document.querySelector('.about-container');
+        if (aboutContainer && data.bio) {
+            const introPara = aboutContainer.querySelector('.about-intro');
+            if (introPara) introPara.innerHTML = data.bio.about.text[0];
+
+            const mainBioPara = aboutContainer.querySelector('.main-bio');
+            if (mainBioPara) mainBioPara.innerHTML = data.bio.about.text[1];
+
+            const identityList = aboutContainer.querySelector('.identity-list');
+            if (identityList && data.bio.about.text[2]) {
+                const cleanText = data.bio.about.text[2].replace('🚀 What I Do: ', '');
+                const items = cleanText.split('; ');
+                identityList.innerHTML = items.map(item => `<li class="identity-card">${item.trim()}</li>`).join('');
+            }
+        }
+
+        // --- Experience Section ---
+        const expContainer = document.querySelector('#experience-list');
+        if (expContainer && data.experience) {
+            expContainer.innerHTML = data.experience.map(exp => `
+                <div class="exp-item" style="margin-bottom: 30px; border-left: 2px solid #f9bf3f; padding-left: 20px;">
+                    <h3 style="margin:0; font-size:18px; font-weight:700;">${exp.role}</h3>
+                    <h4 style="margin:5px 0; font-size:15px; color:#2c98f0;">${exp.company}</h4>
+                    <span style="font-size:12px; color:#888; font-weight:500;">${exp.duration}</span>
+                    <ul style="margin-top:10px; padding-left:20px; font-size:14px; color:#555;">
+                        ${exp.details.map(d => `<li style="margin-bottom:5px;">${d}</li>`).join('')}
+                    </ul>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-4 group-hover:translate-x-1 transition-transform">${repo.title}</h3>
-                <p class="text-sm text-slate-400 mb-6 leading-relaxed">${repo.desc}</p>
-            </div>
-            <div>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    ${repo.tech.map(t => `<span class="tech-tag font-mono">${t}</span>`).join('')}
+            `).join('');
+        }
+
+        // --- Technical Skills ---
+        const skillCategories = document.querySelectorAll('.skill-category');
+        if (skillCategories.length > 0 && data.skills) {
+            data.skills.forEach((skill, index) => {
+                if (skillCategories[index]) {
+                    const titleEl = skillCategories[index].querySelector('h3');
+                    const listEl = skillCategories[index].querySelector('ul');
+                    if (titleEl) titleEl.innerText = skill.title;
+                    if (listEl) {
+                        const icons = ["fa-check-square-o", "fa-code", "fa-linux", "fa-github"];
+                        const currentIcon = icons[index] || "fa-code";
+                        listEl.innerHTML = `
+                            <li><i class="fa ${currentIcon}"></i> ${skill.skillName}</li>
+                            <li>
+                                <div class="progress-wrap" style="width:100%; background:#eee; height:5px; border-radius:5px; margin:8px 0 4px;">
+                                    <div class="progress-bar" style="width:${skill.percentage}%; background:#2c98f0; height:100%; border-radius:5px;"></div>
+                                </div>
+                                <small style="color:#888;">Proficiency: ${skill.percentage}%</small>
+                            </li>
+                        `;
+                    }
+                }
+            });
+        }
+
+        // --- Projects ---
+        const populateProjectList = (projectList, containerId) => {
+            const container = document.getElementById(containerId);
+            if (!container || !projectList) return;
+            container.innerHTML = projectList.map(project => `
+                <li class="project-item" style="display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; padding:15px; margin-bottom:10px; border-radius:5px; border-left:3px solid #2c98f0;">
+                    <div style="flex: 1; padding-right: 15px;">
+                        <strong style="font-size:15px; color:#333;">${project.projectName}</strong>
+                        <p style="margin:5px 0; font-size:13px; color:#666;">${project.summary}</p>
+                        <span style="font-size:11px; color:#2c98f0; font-weight:600;">Tech: ${project.techStack.join(', ')}</span>
+                    </div>
+                    <a href="${project.preview}" target="_blank" style="white-space:nowrap; padding:6px 15px; border:1px solid #2c98f0; border-radius:4px; font-size:12px; font-weight:700;">View Code</a>
+                </li>
+            `).join('');
+        };
+        populateProjectList(data.projects.web, 'web-projects');
+        populateProjectList(data.projects.software, 'software-projects');
+
+        // --- Education & Contact ---
+        const eduBlock = document.querySelector('.education-block');
+        if (eduBlock && data.education) {
+            eduBlock.innerHTML = data.education.map(edu => `
+                <div class="edu-item">
+                    <table style="width:100%;">
+                        <tr><td style="font-weight:bold; width:120px; padding:5px 0;">Degree:</td><td>${edu.title}</td></tr>
+                        <tr><td style="font-weight:bold; padding:5px 0;">Institution:</td><td>${edu.subtitle}</td></tr>
+                        <tr><td style="font-weight:bold; padding:5px 0;">Year:</td><td>${edu.duration}</td></tr>
+                    </table>
                 </div>
-                <a href="${repo.url}" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-cyber-primary group-hover:gap-4 transition-all">
-                    View Repository <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                </a>
-            </div>
-        </div>
-    `).join('');
-
-    // Re-initialize Lucide icons for dynamically added HTML
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-}
-
-/**
- * INTERACTION LOGIC
- */
-const menuToggle = document.getElementById('menu-toggle');
-const sidebar = document.getElementById('sidebar');
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('section');
-
-// Toggle Mobile Sidebar
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full');
-    });
-}
-
-// Close sidebar on link click (mobile optimized)
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth < 768) {
-            sidebar.classList.add('-translate-x-full');
+            `).join('<hr>');
         }
-    });
-});
-
-// Scroll Reveal Observer
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
+        
+        const contactDiv = document.querySelector('.contact-info');
+        if(contactDiv && data.bio.contact) {
+            contactDiv.innerHTML = data.bio.contact.text.map(t => `<p style="font-size:16px;">${t}</p>`).join('');
         }
-    });
-}, { threshold: 0.1 });
+    };
 
-// Active Navigation State on Scroll
-window.addEventListener('scroll', () => {
-    let current = "";
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.pageYOffset >= (sectionTop - 250)) {
-            current = section.getAttribute("id");
-        }
+    $(function() {
+        populatePortfolio();
+        $('.js-colorlib-nav-toggle').on('click', function(e) {
+            e.preventDefault();
+            $('body').toggleClass('offcanvas');
+            $(this).toggleClass('active');
+        });
+        $('#accordion .link').on('click', function() {
+            $(this).next().slideToggle();
+            $('.submenu').not($(this).next()).slideUp();
+        });
+        $('#colorlib-main-menu a[data-nav-section]').on('click', function(e) {
+            e.preventDefault();
+            const section = $(this).data('nav-section');
+            const target = $(`section[data-section="${section}"]`);
+            if (target.length) {
+                $('html, body').animate({ scrollTop: target.offset().top }, 500);
+            }
+            if ($('body').hasClass('offcanvas')) {
+                $('body').removeClass('offcanvas');
+                $('.js-colorlib-nav-toggle').removeClass('active');
+            }
+            $('#colorlib-main-menu li').removeClass('active');
+            $(this).parent().addClass('active');
+        });
     });
-
-    navLinks.forEach(link => {
-        link.classList.remove("sidebar-active");
-        if (link.getAttribute("href").includes(current)) {
-            link.classList.add("sidebar-active");
-        }
-    });
-});
-
-/**
- * INITIALIZATION
- */
-window.onload = () => {
-    // Render Icons
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-    
-    // Render Portfolio Projects
-    renderProjects();
-    
-    // Start Animation Observers
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-    
-    // Default Sidebar Active State
-    const aboutLink = document.querySelector('[data-section="about"]');
-    if (aboutLink) aboutLink.classList.add('sidebar-active');
-};
+}());
