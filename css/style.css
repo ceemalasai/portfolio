@@ -1,0 +1,150 @@
+/* Sai Kishore Portfolio - Global Styles */
+
+body {
+    font-family: "Quicksand", Arial, sans-serif;
+    background-color: #eef7f4; 
+    margin: 0;
+    color: #333;
+}
+
+#colorlib-aside {
+    background-color: #f9bf3f; 
+    width: 300px;
+    position: fixed;
+    height: 100vh;
+    z-index: 1001;
+    text-align: center;
+    padding-top: 4em;
+    overflow-y: auto;
+    transition: 0.5s;
+}
+
+/* Sidebar Name - BLUE */
+#colorlib-aside #colorlib-logo a {
+    color: #2c98f0 !important;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 32px;
+    font-family: "Playfair Display", serif;
+}
+
+#colorlib-aside .position {
+    color: rgba(0,0,0,0.4);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+#colorlib-main-menu ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#colorlib-main-menu ul li a {
+    color: rgba(0,0,0,0.6);
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 12px 0;
+    display: block;
+}
+
+#colorlib-main-menu ul li.active a {
+    color: #2c98f0;
+}
+
+#colorlib-main {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    background: #fff;
+    min-height: 100vh;
+}
+
+.colorlib-narrow-content {
+    padding: 60px 4em;
+}
+
+h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 36px;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+/* Identity Cards - Screenshot Style */
+.identity-list {
+    list-style: none;
+    padding: 0;
+}
+
+.identity-card {
+    background: #fff;
+    border-left: 4px solid #2c98f0;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    font-size: 15px;
+    color: #555;
+    transition: 0.3s;
+}
+
+.identity-card:hover {
+    transform: translateX(5px);
+}
+
+.skill-category {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border-left: 5px solid #2c98f0;
+    margin-bottom: 30px;
+}
+
+.skill-category h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-category i {
+    color: #2c98f0;
+    margin-right: 10px;
+}
+
+/* Accordion for Projects */
+.accordion { list-style: none; padding: 0; }
+.accordion .link { cursor: pointer; display: block; padding: 15px; background: #f2f3f7; margin-bottom: 5px; font-weight: 700; color: #333; position: relative; }
+.accordion .link i { position: absolute; right: 15px; top: 18px; font-size: 12px; }
+.submenu { display: none; list-style: none; padding: 10px 0; }
+
+/* Responsive Burger Menu */
+.colorlib-nav-toggle {
+    display: none;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1002;
+    background: #2c98f0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 768px) {
+    #colorlib-aside { transform: translateX(-300px); }
+    #colorlib-main { width: 100%; margin-left: 0; }
+    .colorlib-nav-toggle { display: block; }
+    body.offcanvas #colorlib-aside { transform: translateX(0); }
+    .colorlib-narrow-content { padding: 40px 1.5em; }
+}
